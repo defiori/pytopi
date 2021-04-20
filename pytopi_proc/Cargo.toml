@@ -1,0 +1,23 @@
+[package]
+name = "pytopi_proc"
+version = "0.1.0"
+authors = ["defiori"]
+license = "MPL-2.0"
+edition = "2018"
+
+[lib]
+name = "pytopi_proc"
+crate-type = ["cdylib"]
+
+[features]
+default = ["python-node", "c-node"]
+python-node = ["topi_proc/python-node"]
+c-node = ["topi_proc/c-node"]
+
+[dependencies]
+topi_proc = { path = "../../topi/topi_proc", version = "^0.1.0", default-features = false, features = ["called-from-python"] }
+pyo3 = { version = "^0.13", features = ["extension-module"] }
+
+[package.metadata.maturin.scripts]
+topi_proc = "pytopi_proc:_main"
+topi_proc_test = "pytopi_proc:_main_test"
